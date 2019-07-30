@@ -10,27 +10,12 @@ namespace SunmiDemo.ViewModel
     public class MainViewModel
     {
         public ICommand PrintCommand { get; private set; }
-        public ICommand ScanCommand { get; private set; }
         public ICommand LFCommand { get; private set; }
 
         public MainViewModel()
         {
             PrintCommand = new Command(async () => await PrintItem());
-            ScanCommand = new Command(async () => await ScanItem());
             LFCommand = new Command(async () => await PrinterCommand());
-        }
-
-        async Task ScanItem()
-        {
-            
-            
-            //var _navigation = Application.Current.MainPage.Navigation;
-            //var _lastPage = _navigation.NavigationStack.LastOrDefault();
-
-            //var NewPage = new cpgScan();
-            //await Navigation.PushAsync(NewPage);
-
-            //_navigation.RemovePage(_lastPage);
         }
 
         async Task PrinterCommand()

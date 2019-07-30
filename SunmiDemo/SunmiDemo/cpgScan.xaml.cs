@@ -20,9 +20,7 @@ namespace SunmiDemo
 
         private async void BtnCameraScan_Clicked(object sender, EventArgs e)
         {
-
             ntrLaserBarcode.Text = "";
-            string customer;
 
             var scan = new ZXingScannerPage();
             await Navigation.PushAsync(new NavigationPage(scan));

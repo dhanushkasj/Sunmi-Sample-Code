@@ -13,6 +13,9 @@ using Android.Widget;
 using Java.Util;
 using XF.Bluetooth.Printer.Plugin.Abstractions;
 
+using ESCPOS_NET.Emitters;
+using ESCPOS_NET.Utilities;
+
 namespace SunmiDemo.Droid
 {
     public class Print : IPrint
@@ -56,6 +59,18 @@ namespace SunmiDemo.Droid
                                 byte[] message = System.Text.Encoding.ASCII.GetBytes(input);
                                 await _socket.OutputStream.WriteAsync(message, 0, message.Length);
                                 _socket.OutputStream.WriteByte(0x0A);
+
+                                //try ESCPOS_NET
+                                var e = new EPSON();
+                                var buffer = ByteSplicer.Combine(
+                                    e.CenterAlign(), 
+                                    e.PrintLine("Receipt"),
+                                    e.Print("From "), e.SetStyles(PrintStyle.Bold), e.Print($"bold"), e.SetStyles(PrintStyle.None),
+                                    e.SetBarcodeHeightInDots(48), e.PrintBarcode(BarcodeType.CODE39, "ABC"), e.PrintLine(""),
+                                    e.LeftAlign(), e.PrintLine("left"),
+                                    e.PrintLine("user: " + "username")
+                                    );
+                                await _socket.OutputStream.WriteAsync(buffer, 0, buffer.Length);
                                 break;
                         }
                         

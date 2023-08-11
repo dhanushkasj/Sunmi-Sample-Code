@@ -32,7 +32,9 @@ namespace SunmiDemo.Droid
             {
                 foreach (var pairedDevice in BluetoothAdapter.DefaultAdapter.BondedDevices)
                 {
-                    printerName = pairedDevice.Name;
+                    // add validation to select InnerPrinter
+                    if (pairedDevice.Address == "00:11:22:33:44:55")
+                        printerName = pairedDevice.Name;
                 }
 
                 if (printerName != null)
